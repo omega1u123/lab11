@@ -47,7 +47,7 @@ fun ImagePost(
 fun Post(
     post: PostModel,
     onJoinButtonClick: (Boolean) -> Unit = {},
-    content: @Composable () -> Unit = {}
+    content: @Composable () -> Unit =
 ) {
     Card(shape = MaterialTheme.shapes.large) {
         Column(
