@@ -28,28 +28,34 @@ import com.topic3.android.reddit.domain.model.PostModel
 import com.topic3.android.reddit.domain.model.PostModel.Companion.DEFAULT_POST
 
 @Composable
-fun TextPost(post: PostModel) {
-    Post(post) {
-        TextContent(post.text)
-    }
+fun TextPost(
+    post: PostModel,
+    onJoinButtonClick: (Boolean) -> Unit = {}
+) {
+    Post(post, onJoinButtonClick){ TextContent(post.text) }
 }
 
 @Composable
-fun ImagePost(post: PostModel) {
-    Post(post) {
-        ImageContent(post.image ?: R.drawable.compose_course)
-    }
+fun ImagePost(
+    post: PostModel,
+    onJoinButtonClick: (Boolean) -> Unit={}
+) {
+    Post(post, onJoinButtonClick){ ImageContent(post.image!!)}
 }
 
 @Composable
-fun Post(post: PostModel, content: @Composable () -> Unit = {}) {
+fun Post(
+    post: PostModel,
+    onJoinButtonClick: (Boolean) -> Unit = {},
+    content: @Composable () -> Unit = {}
+) {
     Card(shape = MaterialTheme.shapes.large) {
         Column(
             modifier = Modifier.padding(
                 top = 8.dp, bottom = 8.dp
             )
         ) {
-            Header(post)
+            Header(post, onJoinButtonClick)
             Spacer(modifier = Modifier.height(4.dp))
             content.invoke()
             Spacer(modifier = Modifier.height(8.dp))
@@ -60,8 +66,15 @@ fun Post(post: PostModel, content: @Composable () -> Unit = {}) {
 }
 
 @Composable
-fun Header(post: PostModel) {
-    Row(modifier = Modifier.padding(start = 16.dp)) {
+fun Header(
+    post: PostModel,
+    onJoinButtonClick: (Boolean) -> Unit = {}
+) {
+    //TODO
+    Row(
+        modifier = Modifier.padding(start = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Image(
             ImageBitmap.imageResource(id = R.drawable.subreddit_placeholder),
             contentDescription = stringResource(id = R.string.subreddits),
@@ -81,6 +94,8 @@ fun Header(post: PostModel) {
                 color = Color.Gray
             )
         }
+        Spacer(modifier = Modifier.width(4.dp))
+        JoinButton(onJoinButtonClick)
         MoreActionsMenu()
     }
     Title(text = post.title)
@@ -159,6 +174,7 @@ fun TextContent(text: String) {
 
 @Composable
 fun ImageContent(image: Int) {
+    //TODO
     val imageAsset = ImageBitmap.imageResource(id = image)
     Image(
         bitmap = imageAsset,
@@ -204,6 +220,7 @@ fun VotingAction(
     onUpVoteAction: () -> Unit,
     onDownVoteAction: () -> Unit
 ) {
+    //TODO
     Row(verticalAlignment = Alignment.CenterVertically) {
         ArrowButton(
             onUpVoteAction,
@@ -221,6 +238,7 @@ fun VotingAction(
 
 @Composable
 fun ArrowButton(onClickAction: () -> Unit, arrowResourceId: Int) {
+    //TODO
     IconButton(onClick = onClickAction, modifier = Modifier.size(30.dp)) {
         Icon(
             imageVector = ImageVector.vectorResource(arrowResourceId),
